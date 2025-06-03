@@ -1,55 +1,146 @@
 # My-GUI-Project
-Just a very simple GUI project that will allow me to test my other projects more easly. It will be used as a library when i finish it.
+Very simple Library for creating and using basic GUI's using SFML studio. Meant to be used while testing programs or simulations.
+The project needs an SFML library to work. In the library there is a README file that contains the CMakeLists code that will help implement the library with SFML integrated
 
-How to build:
-1. Install CMake.
-2. Run:
-cmake -B build
-cmake --build build
-In the Terminal while in the Root folder.
-3. The project should be ready to open in VS.
+The library was made by me, as a side project to get started with SFML graphics.
+It has some basic features like crating a menu and giving it a size and position, creating Widget Templates and adding them to the menu, and giving the Widgets functionality.
 
-How to use:
-The project is build using SFML library.
-To use the main features you first need to create your GUI window.
-Use:
-  MainGui ExampleName(sfmlWindow, {position.x, position.y}, {size.x, size.y}, BackgroundColor(sfml), "Label GUIName", WidgetSpacing(int))
-  
-That will create your window which you can add widgets too.
-The size.x will automatically change if the Label is too long, and the size.y will strech when adding Widgets if they are out of bounds.
+## Features
 
-To Add a Widget first you need to create a Widget Template for the MainGui to copy.
+- Creating useful interfaces for testing other projects
+- Adding multiple interfaces on one scene and using them seperately
+- Creating Widget templates that can be added to any interface
+- Adding functionality to the Widgets
 
-To do that you need to:
 
-auto WidgetName = Create"___"(Values to customize and add functionality);
+## Acknowledgements
 
-Where "____" is the name of the Widget you want to add.
-The current list of Widgets:
-  Button
-  Checkbox
-  Radio
+ - [SFML 3.0.0 Documentation](https://www.sfml-dev.org/documentation/3.0.0/)
 
-The functionality of each Widget:
-  Button:
-  A button can recive an "onClick" function that will be called upon clicking the button.
-  To pass it the function you need to write:
-  ButtonName->onCllick =[parameters](){
-    //Your function
-  };
 
-  Checkbox:
-  A Checkbox can be linked to any bool variable via pointers and is able to toggle it between true or false when Checked.
-  The same value can be linked to multiple Checkboxes which will trigger all of them upon checking one.
 
-  Radio:
-  Radio button can be linked to any float variable via pointers and is able to pass it its RadioValue when checked.
-  Multiple radio buttons can be linked to the same variable - which couses them to automatically uncheck if any other linked radio button is checked.
 
-After creating a template you can then add it to your GUI by using a command:
-  ExampleName.addWidget(yourWidget);
-Which will accept any of your widget templates and add them to your GUI.
 
-You can have multiple GUI's in the same Window and you can also pass the same Templates many times in the same and different GUI's.
+## Run Locally
 
-THERE WILL BE MORE UPDATES
+Clone the Library
+
+```bash
+  git clone https://github.com/carpetfluid/My-GUI-Project.git
+```
+Creatre a project Folder and clone [Project Template](https://github.com/SFML/cmake-sfml-project)
+
+```bash 
+ git clone https://github.com/SFML/cmake-sfml-project.git
+ ```
+go to the CMakeLists.txt and change its content to the README.txt found in Library folder.
+Remember to change the path to the path of the downloaded Library.
+
+In the root folder create a "build" folder and enter it.
+Use right-click to open CMD and type
+
+```bash
+cmake ..
+cmake --build .
+```
+
+To use a library you need to add two includes
+
+```bash
+#include <GUI_Library/GUImain.hpp>
+#include <GUI_Library/CreatingWidgets.hpp>
+```
+
+and now you're free to use the library in your project.
+
+
+## Creating GUI
+To create your GUI you will create a MainGui instance.
+MainGui takes parameters
+```C++
+MainGui MyGUI(<SFML Window>, <position {x, y}>, <size {x, y}>, <SFML Color>, <Label {string}>, <SFML Font>, <Height{int}>)
+```
+Where:
+
+<SFML Window> stands for Window or RenderWindow object from SFML.
+
+<position {x,y}> stands for SFML Vector2f or {x, y}, that stores x and y position.
+
+<size {x, y}> stands for SFML Vector2f or {x, y}, that stores x and y size.
+
+<SFML Color> stands for SFML Color that will be displayed as a background of the GUI.
+
+<Label{string}> Is a string value that will be used as GUI Label at the top.
+
+<SFML font> Stands for SFML font that will be used in the GUI.
+
+<Height{int}> Is a universal Height for every Widget
+
+
+So Example Implementation would look something like that:
+```C++
+MainGui MyGUI(window, {1,1}, {600, 800}, sf::Color::Black, "MyTestGUI", ComicSans, 100);
+```
+
+To Render the GUI in the window you need to call the
+```C++
+MyGUI.Render();
+```
+function each frame.
+## Widgets
+
+The list of Widgets consists of:
+- Button
+- Checkbox
+- Radio
+- Number
+- Slider
+
+Too add a Widget to your GUI you need to run the addWidget() Function.
+
+```C++
+    MyGUI.addWidget(<myWidget>);
+```
+
+but for that you first need to create a Widget Template.
+
+Its called a Template because it's not the widget itself, but rather instruction to the MainGui instance of what Widget to display.
+
+
+Here's implementation for every Widget, and instructions how they work:
+
+## Button
+To create a button template you run the function
+```C++
+CreateButton(<ButtonText>, <ButtonTextColor>, <ButtonLabel>, <ButtonColor>, <ButtonWidth>, <ButtonHoverColor>);
+```
+(All Colors are implemented using SFML Color)
+
+<ButtoText> is a string value displayed on the button.
+
+<ButtonTextColor> is the color of the text on the button.
+
+<ButtonLabel> is a string value displayed next to the button.
+
+<ButtonColor> is a color of a button itself
+
+<ButtonWidth> is the width of this specific Button.
+
+<ButtonHoverColor> is the color of the button when the pointer is over it.
+
+So the example usage would be:
+```C++
+auto button = CreateButton("Click Me", sf::Color::White, "Guzik", sf::Color::Blue, 100, sf::Color::Red);
+MyGUI.addWidget(button);
+```
+
+To add functionality to the button you need to give it a function.
+To do that we use:
+```C++
+button->onClick = []() {
+        //Your function
+        //Example:
+        std::cout<<"Clicked!!"<<std::endl;
+    };
+```
+where button is your button template's name.

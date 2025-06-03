@@ -3,28 +3,35 @@
 #include <memory>
 #include <functional>
 
-#include "GUImain.hpp" 
-#include "CreatingWidgets.hpp"
+#include "GUIstuff/GUImain.hpp"
+#include "GUIstuff/CreatingWidgets.hpp"
 
 int main()
 {
-
-    auto window = sf::RenderWindow(sf::VideoMode({1920u, 1080u}), "CMake SFML Project");
+    auto window = sf::RenderWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), "GUI TEST SCREEN");
+    
     window.setFramerateLimit(144);
 
-    std::string test = "Nie klikniête";
+    MainGui GUItest(window, { 1,1 }, { 600,10 }, sf::Color(0,0,255,180), "TestGuiLabel", 100);
+  
 
-    
-    MainGui myGui(window, { 0,0 }, { 100,200 }, sf::Color::White, 50);
+    auto button1 = CreateButton("Button1", sf::Color::White, "Label Test", sf::Color(10,10,10), 200);
+    auto button2 = CreateButton("Button2", sf::Color::Red, "Label2", sf::Color(10, 10, 10), 200);
 
-    auto button1 = createButton("Button1", sf::Color::Red, sf::Color::White);
-    auto button2 = createButton("Button2", sf::Color::Green, sf::Color::White);
-    button1->onClick =[&test]() {
-        test = "Klikniety";
-        };
+	bool TestZmienna = false;
+    auto Checkbox1 = CreateCheckbox(&TestZmienna, "CheckboxTest");
 
-    myGui.addWidget(button1);
-    myGui.addWidget(button2);
+    float radioValue = -1.0f;
+    auto radio1 = CreateRadio(&radioValue, 1,"RadioValue: 1", sf::Color::White, sf::Color::Magenta);
+    auto radio2 = CreateRadio(&radioValue, 2, "RadioValue: 2", sf::Color::White, sf::Color::Magenta);
+    auto radio3 = CreateRadio(&radioValue, 3, "RadioValue: 3", sf::Color::White, sf::Color::Magenta);
+   
+	GUItest.addWidget(button1);
+    GUItest.addWidget(button2);
+	GUItest.addWidget(Checkbox1);
+	GUItest.addWidget(radio1);
+	GUItest.addWidget(radio2);
+	GUItest.addWidget(radio3);
 
 
     while (window.isOpen())
@@ -38,10 +45,9 @@ int main()
         }
 
         window.clear();
-        std::cout << test << std::endl;
-
-        myGui.Render();
-
+        GUItest.Render();
+		std::cout << "RadioValue: " << radioValue << std::endl;
+        
         window.display();
     }
 }

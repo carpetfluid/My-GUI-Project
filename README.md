@@ -78,12 +78,12 @@ Where:
 
 
 So Example Implementation would look something like that:
-```C++
+```cpp
 MainGui MyGUI(window, {1,1}, {600, 800}, sf::Color::Black, "MyTestGUI", ComicSans, 100);
 ```
 
 To Render the GUI in the window you need to call the
-```C++
+```cpp
 MyGUI.Render();
 ```
 function each frame.
@@ -98,7 +98,7 @@ The list of Widgets consists of:
 
 Too add a Widget to your GUI you need to run the addWidget() Function.
 
-```C++
+```cpp
     MyGUI.addWidget(<myWidget>);
 ```
 
@@ -111,7 +111,7 @@ Here's implementation for every Widget, and instructions how they work:
 
 ## Button
 To create a button template run a function
-```C++
+```cpp
 CreateButton(<ButtonText>, <ButtonTextColor>, <ButtonLabel>, <ButtonColor>, <ButtonWidth>, <ButtonHoverColor>);
 ```
 (All Colors are implemented using SFML Color)
@@ -129,14 +129,14 @@ CreateButton(<ButtonText>, <ButtonTextColor>, <ButtonLabel>, <ButtonColor>, <But
 <ButtonHoverColor> is the color of the button when the pointer is over it.
 
 So the example usage would be:
-```C++
+```cpp
 auto button = CreateButton("Click Me", sf::Color::White, "Guzik", sf::Color::Blue, 100, sf::Color::Red);
 MyGUI.addWidget(button);
 ```
 
 To add functionality to the button you need to give it a function.
 To do that we use:
-```C++
+```cpp
 button->onClick = []() {
         //Your function
         //Example:
@@ -147,7 +147,7 @@ where "button" is your button template's name.
 
 ## Checkbox
 To create a checkbox template run a function:
-```C++
+```cpp
 CreateCheckbox(<PointerToVariable>,<Label>, <IsChecked{bool}>);
 ```
 <PointerToVariable> is a pointer to a bool Variable that will toggle with the checkbox.
@@ -158,14 +158,14 @@ CreateCheckbox(<PointerToVariable>,<Label>, <IsChecked{bool}>);
 
 So the example usage would be:
 
-```C++
+```cpp
 auto checkbox = CreateCheckbox(&isVisible, "Visibility", false);
 MyGUI.addWidget(checkbox);
 ```
 Now when the checkbox is checked the Linked variable will be set to true, and if its unchecked, the variable will be set to false.
 ## Radio
 To create a Radio button template run a function:
-```C++
+```cpp
 CreateRadio(<PointerToVariable>, <RadioValue>, <Label>);
 ```
 
@@ -176,14 +176,14 @@ CreateRadio(<PointerToVariable>, <RadioValue>, <Label>);
 <Label> is a string value displayed next to the Radio button.
 
 So the example usage would be:
-```C++
+```cpp
 auto radio = CreateRadio(&width, 1980, "Width of the screen");
 ```
 
 Many Radio buttons can be linked to the same variable. That will allow to switch the value of the linked variable between the value's of radio's.
 ## Number
 To create a Number Widget run a function:
-```C++
+```cpp
 CreateNumber(<PointerToVariable>, <Label>, <Step>);
 ```
 
@@ -194,7 +194,7 @@ CreateNumber(<PointerToVariable>, <Label>, <Step>);
 <Step> is an int value of how much the value changes each click.
 
 So the example usage would be:
-```C++
+```cpp
 auto number = CreateNumber(&Value, "Number of something", 1); 
 
 MyGUI.addWidget(number);
@@ -204,7 +204,7 @@ To change the value of the linked variable you press the arrow buttons next to t
 ## Slider
 To create a Slider Widget run a function:
 
-```C++
+```cpp
 CreateSlider(<PointerToVariable>, <Label>, <MinValue>, <MaxValue>, <Step>);
 ```
 
@@ -220,7 +220,7 @@ CreateSlider(<PointerToVariable>, <Label>, <MinValue>, <MaxValue>, <Step>);
 
 So the example usage would be:
 
-```C++
+```cpp
 auto slider = CreateSlider(&brightness, "Brightness", 0, 100, 1);
 MyGUI.addWidget(slider);
 ```

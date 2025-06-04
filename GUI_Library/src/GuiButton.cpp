@@ -1,39 +1,45 @@
-#include "../GUImain.hpp"
+#include "../include/GUI_Library/GUImain.hpp"
 //Useful Variables
-sf::Font WidgetFontButton("C:/Users/jack9/OneDrive/Pulpit/PROGRAMOWANIE/C++/Grafika/GUI PROJECT/MyTryAtGuiRework/assets/arial.ttf");
-
 
 //GuiButton
 
 void MainGui::GuiButton::Render() {
 	if (!window) return;
-	
-	//Making a Label for the button
+	//Variables
 	LabelWidth = size.x - ActualWidth;
-	sf::Text RenderLabelText(WidgetFontButton);
+	sf::Vector2 LabelPosition = {position.x, position.y + size.y/4};
+	sf::Vector2f ButtonPosition{ position.x + LabelWidth, position.y };
+	//Making a Label for the button
+	
+	sf::Text RenderLabelText(FontPath);
 	RenderLabelText.setString(ButtonLabel);
 	RenderLabelText.setFillColor(sf::Color::White);
 	RenderLabelText.setCharacterSize(size.y/2);
-	RenderLabelText.setPosition(position);
+	//Centering the position of label text
+	sf::Rect LabelTextBounds = RenderLabelText.getLocalBounds();
+	
+	RenderLabelText.setPosition(LabelPosition);
+
 	//Making a button shape
 	sf::RectangleShape Button;
 	Button.setSize({ActualWidth,size.y});
-	Button.setPosition({position.x+LabelWidth, position.y});
+	Button.setPosition(ButtonPosition);
 	if(isHovered) {
 		Button.setFillColor(ButtonHoverColor);
 	} else {
 		Button.setFillColor(ButtonColor);
 	}
 	//Making a Button Text
-	sf::Text RenderButtonText(WidgetFontButton);
+	sf::Text RenderButtonText(FontPath);
 	RenderButtonText.setString(ButtonText);
 	
 	RenderButtonText.setFillColor(ButtonTextColor);
-	RenderButtonText.setCharacterSize(size.y / 2);
-	RenderButtonText.setPosition({(size.x-ActualWidth/2)+position.x,position.y});
+	RenderButtonText.setCharacterSize(size.y / 4);
 	sf::Rect ButtonTextBounds = RenderButtonText.getLocalBounds();
-	RenderButtonText.setOrigin({ ButtonTextBounds.position.x+ButtonTextBounds.size.x/2.0f, 0.f});
-	//RenderButtonText.setPosition({ ButtonTextBounds.position.x + ButtonTextBounds.size.x / 2.0f,position.y });
+
+	sf::Vector2f ButtonTextPosition = { position.x + (LabelWidth + ActualWidth / 2) - (ButtonTextBounds.size.x / 2),position.y + (size.y / 2) - ButtonTextBounds.size.y };
+
+	RenderButtonText.setPosition(ButtonTextPosition);
 
 	window->draw(RenderLabelText);
 	window->draw(Button);
@@ -57,10 +63,10 @@ void MainGui::GuiButton::HandleClick() {
 	}
 	if (isPressed && isInside && !wasPressed) {
 		wasPressed = true;
-		if (onClick) onClick(); // tylko raz na klikniêcie
+		if (onClick) onClick(); // tylko raz na klikniÄ™cie
 	}
 	else if (!isPressed) {
 		wasPressed = false; // reset po puszczeniu myszy
 	}
-}
 
+}

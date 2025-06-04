@@ -1,12 +1,9 @@
-#include "GUImain.hpp"
+#include "../include/GUI_Library/GUImain.hpp"
 //Useful Variables
 sf::Color ContainerColor = sf::Color(89, 96, 166, 255); //Color for the Widget container
 
 
 float GuiLabelHeight = 50.0f; //Height of the GUI label box
-
-sf::Font GuiLabelFont("C:/Users/jack9/OneDrive/Pulpit/PROGRAMOWANIE/C++/Grafika/GUI PROJECT/MyTryAtGuiRework/assets/arial.ttf");
-
 
 //MainGui functions
 
@@ -16,6 +13,7 @@ MainGui::MainGui(
     sf::Vector2f size,
     sf::Color backgroundColor,
     std::string GuiLabel,
+    sf::Font Path,
     float widgetHeight
 
 )
@@ -24,6 +22,7 @@ MainGui::MainGui(
     size(size),
     backgroundColor(backgroundColor),
 	GuiLabel(GuiLabel),
+	Font(Path),
     widgetHeight(widgetHeight) {
     view = window.getView();
 };
@@ -34,6 +33,8 @@ void MainGui::addWidget(const std::shared_ptr<Widget>& widget) {
     widgetCopy->window = &window;
     widgetCopy->position = sf::Vector2f(position.x, position.y + Widgets.size() * widgetHeight);
     widgetCopy->size = sf::Vector2f(size.x, widgetHeight);
+    
+    widgetCopy->FontPath = Font;
     
     Widgets.push_back(std::move(widgetCopy));
 	if (Widgets.size() * widgetHeight > size.y) size.y = Widgets.size() * widgetHeight; // Adjust the size of the GUI if needed
@@ -51,7 +52,7 @@ void MainGui::Render() {
 	LabelBox.setOutlineColor(sf::Color::White);
 	LabelBox.setOutlineThickness(1.0f);
 
-	sf::Text labelText(GuiLabelFont);
+	sf::Text labelText(Font);
     
 	labelText.setString(GuiLabel);
 	labelText.setCharacterSize(GuiLabelHeight*0.8);
@@ -84,8 +85,10 @@ void MainGui::Render() {
         sf::RectangleShape WidgetContainer({size.x, widgetHeight});
 		WidgetContainer.setPosition(widget->position);
 		WidgetContainer.setFillColor(ContainerColor);
+        WidgetContainer.setOutlineThickness(1.0f);
+        WidgetContainer.setOutlineColor(ContainerColor-sf::Color(30,30,30,0));
         window.draw(WidgetContainer);
-        widget->Render();
+        //widget->Render();
 	}
 	background.setPosition(position);
     for (auto& widget : Widgets) {

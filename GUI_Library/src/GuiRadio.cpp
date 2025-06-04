@@ -1,6 +1,4 @@
-#include "../GUImain.hpp"
-
-sf::Font WidgetFontRadio("C:/Users/jack9/OneDrive/Pulpit/PROGRAMOWANIE/C++/Grafika/GUI PROJECT/MyTryAtGuiRework/assets/arial.ttf");
+#include "../include/GUI_Library/GUImain.hpp"
 
 
 //GuiRadio
@@ -10,15 +8,18 @@ void MainGui::GuiRadio::Render() {
 		//Making a Label for Radio
 		ActualWidth = size.y / 2; // Width of the checkbox shape
 		LabelWidth = size.x - ActualWidth;
-		sf::Text RenderLabelText(WidgetFontRadio);
+		sf::Text RenderLabelText(FontPath);
 		RenderLabelText.setString(RadioLabel);
 		RenderLabelText.setFillColor(custonLabelColor);
 		RenderLabelText.setCharacterSize(size.y / 2);
-		RenderLabelText.setPosition(position);
+		//Centering the position of label text
+		sf::Rect LabelTextBounds = RenderLabelText.getLocalBounds();
+		sf::Vector2 LabelPosition = { position.x, position.y + size.y / 4 };
+		RenderLabelText.setPosition(LabelPosition);
 		//Making Checkbox shape
 		sf::CircleShape RadioShape(size.y / 4);
 		//RadioShape.setOrigin({ size.y / 4, size.y / 4 }); // Set origin to center of the circle
-		RadioShape.setPosition({ position.x + LabelWidth - (ActualWidth * 3) / 2, position.y + size.y / 4 });
+		RadioShape.setPosition({ position.x + LabelWidth - (ActualWidth/2), position.y + size.y / 4 });
 		RadioShape.setOutlineThickness(4.0f);
 		if (isChecked) {
 			RadioShape.setFillColor(customRadioColor);
@@ -37,7 +38,7 @@ void MainGui::GuiRadio::HandleClick() {
 	sf::Vector2f mousePos = window->mapPixelToCoords(pixelPos);
 
 	// Calculate center of the circular radio button
-	float centerX = position.x + LabelWidth - (ActualWidth * 3) / 2 + ActualWidth / 2;
+	float centerX = position.x + LabelWidth - (ActualWidth/2) + ActualWidth / 2;
 	float centerY = position.y + size.y / 2;
 	float radius = ActualWidth / 2;
 

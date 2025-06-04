@@ -1,4 +1,4 @@
-#include "CreatingWidgets.hpp"
+#include "../include/GUI_Library/CreatingWidgets.hpp"
 
 //Usefull Variables
 
@@ -48,4 +48,36 @@ std::shared_ptr<MainGui::GuiRadio> CreateRadio(
     radio->custonLabelColor = custonLabelColor;
     radio->customRadioColor = customRadioColor;
 	return radio;
+}
+//===========================================================
+std::shared_ptr<MainGui::GuiNumber> CreateNumber(
+    int* Value,
+    std::string NumberLabel,
+    int stepValue
+) {
+    auto number = std::make_shared<MainGui::GuiNumber>();
+    number->Value = Value;
+    number->NumberLabel = NumberLabel;
+    number->stepValue = stepValue;
+    return number;
+}
+//==========================================================
+std::shared_ptr<MainGui::GuiSlider> CreateSlider(
+    float* linkedVariable,
+    std::string SliderLabel,
+    float MinValue,
+    float MaxValue,
+    float StepValue,
+    sf::Color SliderColor,
+    sf::Color SliderBoxColor
+) {
+    auto slider = std::make_shared<MainGui::GuiSlider>();
+    slider->LinkedVariable = linkedVariable;
+    slider->SliderLabel = SliderLabel;
+    slider->MinValue = MinValue;
+    slider->MaxValue = MaxValue;
+	slider->StepValue = StepValue;
+    slider->SliderColor = SliderColor;
+    slider->SliderBoxColor = SliderBoxColor;
+    return slider;
 }

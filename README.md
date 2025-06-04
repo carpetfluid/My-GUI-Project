@@ -110,7 +110,7 @@ Its called a Template because it's not the widget itself, but rather instruction
 Here's implementation for every Widget, and instructions how they work:
 
 ## Button
-To create a button template you run the function
+To create a button template run a function
 ```C++
 CreateButton(<ButtonText>, <ButtonTextColor>, <ButtonLabel>, <ButtonColor>, <ButtonWidth>, <ButtonHoverColor>);
 ```
@@ -143,4 +143,86 @@ button->onClick = []() {
         std::cout<<"Clicked!!"<<std::endl;
     };
 ```
-where button is your button template's name.
+where "button" is your button template's name.
+
+## Checkbox
+To create a checkbox template run a function:
+```C++
+CreateCheckbox(<PointerToVariable>,<Label>, <IsChecked{bool}>);
+```
+<PointerToVariable> is a pointer to a bool Variable that will toggle with the checkbox.
+
+<Label> is a string Value displayed next to the checkbox.
+
+<IsChecked> is the initial value of the checkbox.
+
+So the example usage would be:
+
+```C++
+auto checkbox = CreateCheckbox(&isVisible, "Visibility", false);
+MyGUI.addWidget(checkbox);
+```
+Now when the checkbox is checked the Linked variable will be set to true, and if its unchecked, the variable will be set to false.
+## Radio
+To create a Radio button template run a function:
+```C++
+CreateRadio(<PointerToVariable>, <RadioValue>, <Label>);
+```
+
+<PointerToVariable> is a pointer to a float variable that will be changed when radio is checked.
+
+<RadioValue> is a float value that the pointed variable will be set to when radio is checked.
+
+<Label> is a string value displayed next to the Radio button.
+
+So the example usage would be:
+```C++
+auto radio = CreateRadio(&width, 1980, "Width of the screen");
+```
+
+Many Radio buttons can be linked to the same variable. That will allow to switch the value of the linked variable between the value's of radio's.
+## Number
+To create a Number Widget run a function:
+```C++
+CreateNumber(<PointerToVariable>, <Label>, <Step>);
+```
+
+<PointerToVariable> is a pointer to a int variable that will be effected by the Widget.
+
+<Label> is a string value displayed next to the number widget.
+
+<Step> is an int value of how much the value changes each click.
+
+So the example usage would be:
+```C++
+auto number = CreateNumber(&Value, "Number of something", 1); 
+
+MyGUI.addWidget(number);
+```
+To change the value of the linked variable you press the arrow buttons next to the number.
+
+## Slider
+To create a Slider Widget run a function:
+
+```C++
+CreateSlider(<PointerToVariable>, <Label>, <MinValue>, <MaxValue>, <Step>);
+```
+
+<PointerToVariable> is a pointer to a float variable that will be effected by the Slider
+
+<Label> is a string value displayed above the slider.
+
+<MinValue> is the lowest value that the slider can be set to.
+
+<MaxValue> is the biggest value that the slider can be set to.
+
+<Step> is a float value of how much the linked variable changes by when button's are pressed.
+
+So the example usage would be:
+
+```C++
+auto slider = CreateSlider(&brightness, "Brightness", 0, 100, 1);
+MyGUI.addWidget(slider);
+```
+
+You can now change the value of linked variable by dragging the slider or pressing the buttons for more accurate control.

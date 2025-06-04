@@ -1,4 +1,3 @@
-#CMakeLists file to build a project with a library
 cmake_minimum_required(VERSION 3.28)
 project(CMakeSFMLProject LANGUAGES CXX)
 
@@ -23,9 +22,12 @@ target_link_libraries(main PRIVATE SFML::Graphics)
 
 # Include GUI_Library headers
 target_include_directories(main PRIVATE
-    #PASTE A PATH TO THE FOLDER WITH A LIBRARY!!!!!!!
+    LIBRARY_PATH/GUI_Library/include #PUT THE LIBRARY PATH HERE
 )
 
 # Add all .cpp files from GUI_Library
-file(GLOB GUI_SRC C:/Users/jack9/MyLibraries/GUI_Library/src/*.cpp)
+file(GLOB GUI_SRC LIBRARY_PATH/GUI_Library/src/*.cpp) #PUT THE LIBRARY PATH HERE
 target_sources(main PRIVATE ${GUI_SRC})
+
+# Group GUI source files in IDEs under "GUI_library"
+source_group("GUI_library" FILES ${GUI_SRC})
